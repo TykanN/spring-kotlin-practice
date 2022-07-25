@@ -1,5 +1,5 @@
 spring:
-  datasource-mysql:
+  datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/spring-db?useSSL=false&allowPublicKeyRetrieval=true
     username: theo
@@ -17,10 +17,6 @@ spring:
       hibernate.format_sql: true
       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
-  logging:
-    level:
-      org.hibernate.SQL: debug
-
   security:
     user:
       name: admin
@@ -28,3 +24,7 @@ spring:
 
   thymeleaf:
     cache: false
+
+logging.level:
+  org.hibernate:
+    SQL: debug
