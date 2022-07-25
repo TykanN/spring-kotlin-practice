@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  db:
+    image: mysql
+    container_name: mysql_test # 컨테이너 이름
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=spring-db # 데이터 베이스
+      - MYSQL_USER=theo # 유저
+      - MYSQL_PASSWORD=theo # 패스워드
+      - MYSQL_ROOT_PASSWORD=root # 루트 패스워드
+      - TZ=Asia/Seoul
+    volumes:
+      - ./db/mysql/data:/var/lib/mysql
+    platform: linux/amd64 # m1용
+    command: # 명령어 실행
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    restart: always
