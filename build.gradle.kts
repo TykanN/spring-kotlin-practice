@@ -25,6 +25,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf:2.7.0")
+
     runtimeOnly("mysql:mysql-connector-java")
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -36,6 +37,12 @@ dependencies {
     // test 환경
     testCompileOnly("org.projectlombok:lombok")
     testAnnotationProcessor("org.projectlombok:lombok")
+
+    // jdbc
+    implementation("org.springframework.boot:spring-boot-starter-jdbc:2.7.0")
+    runtimeOnly("com.h2database:h2:2.1.212")
+
+
 }
 
 tasks.withType<KotlinCompile> {

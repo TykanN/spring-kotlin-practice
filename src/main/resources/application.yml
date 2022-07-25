@@ -1,9 +1,16 @@
 spring:
-  datasource:
+  datasource-mysql:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/spring-db?useSSL=false&allowPublicKeyRetrieval=true
     username: theo
     password: theo
+  datasource-h2:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:tcp://localhost/~/test
+    username: sa
+    password:
+
+
 
   jpa:
     open-in-view: false
