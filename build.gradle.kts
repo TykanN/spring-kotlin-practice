@@ -7,6 +7,18 @@ plugins {
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
     kotlin("plugin.jpa") version "1.6.21"
+    id ("org.jetbrains.kotlin.plugin.allopen") version "1.6.21"
+    id ("org.jetbrains.kotlin.plugin.noarg") version "1.6.21"
+}
+
+noArg {
+    annotation("javax.persistence.Entity")
+}
+
+allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.MappedSuperclass")
+    annotation("javax.persistence.Embeddable")
 }
 
 group = "dev.tykan"
@@ -32,7 +44,7 @@ dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     // jdbc
-    implementation("org.springframework.boot:spring-boot-starter-jdbc:2.7.0")
+//    implementation("org.springframework.boot:spring-boot-starter-jdbc:2.7.0")
     runtimeOnly("com.h2database:h2:2.1.212")
 
 

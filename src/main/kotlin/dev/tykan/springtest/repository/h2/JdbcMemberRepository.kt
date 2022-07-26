@@ -55,10 +55,7 @@ class JdbcMemberRepository(private val dataSource: DataSource) : MemberRepositor
                     null
                 }
                 else -> {
-                    val member = Member()
-                    member.id = rs.getLong("id")
-                    member.name = rs.getString("name")
-                    member
+                    Member(id = rs.getLong("id"), name = rs.getString("name"))
                 }
             }
         } catch (e: java.lang.Exception) {
@@ -79,10 +76,7 @@ class JdbcMemberRepository(private val dataSource: DataSource) : MemberRepositor
             pstmt.setString(1, name)
             rs = pstmt.executeQuery()
             if (rs.next()) {
-                val member = Member()
-                member.id = rs.getLong("id")
-                member.name = rs.getString("name")
-                return member
+                return Member(id = rs.getLong("id"), name = rs.getString("name"))
             }
             return null
         } catch (e: java.lang.Exception) {

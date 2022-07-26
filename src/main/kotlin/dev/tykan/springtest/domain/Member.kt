@@ -8,11 +8,11 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "member")
-class Member {
-
+class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0
-    
-    var name: String = ""
-}
+    var id:Long = 0,
+
+    var name: String =""
+
+)
