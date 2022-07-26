@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-internal class MemberServiceTest {
+class MemberServiceTest {
 
     private lateinit var memberService: MemberService
 
