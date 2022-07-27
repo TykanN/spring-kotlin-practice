@@ -34,3 +34,7 @@ logging.level:
     logging: info
   org.hibernate:
     SQL: debug
+
+server:
+  error:
+    include-message: always
