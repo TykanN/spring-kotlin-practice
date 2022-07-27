@@ -1,7 +1,6 @@
-package dev.tykan.springtest.repository.h2
+package dev.tykan.springtest.repository
 
 import dev.tykan.springtest.domain.Member
-import dev.tykan.springtest.repository.MemberRepository
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource

@@ -1,7 +1,6 @@
-package dev.tykan.springtest.repository.h2
+package dev.tykan.springtest.repository
 
 import dev.tykan.springtest.domain.Member
-import dev.tykan.springtest.repository.MemberRepository
 import org.springframework.jdbc.datasource.DataSourceUtils
 import java.sql.*
 import javax.sql.DataSource
@@ -11,11 +10,11 @@ class JdbcMemberRepository(private val dataSource: DataSource) : MemberRepositor
 
     override fun save(member: Member): Member {
         val sql = "insert into member(name) values(?)"
-         var conn: Connection? = null
-         var pstmt: PreparedStatement? = null
-         var  rs: ResultSet? = null
+        var conn: Connection? = null
+        var pstmt: PreparedStatement? = null
+        var rs: ResultSet? = null
 
-         try {
+        try {
             conn = getConnection()
             pstmt = conn.prepareStatement(
                 sql,
@@ -24,19 +23,19 @@ class JdbcMemberRepository(private val dataSource: DataSource) : MemberRepositor
             pstmt.setString(1, member.name)
             pstmt.executeUpdate()
             rs = pstmt.generatedKeys
-             when {
-                 rs.next() -> {
-                     member.id = rs.getLong(1)
-                 }
-                 else -> {
-                     throw SQLException("id 조회 실패")
-                 }
-             }
-             return member
+            when {
+                rs.next() -> {
+                    member.id = rs.getLong(1)
+                }
+                else -> {
+                    throw SQLException("id 조회 실패")
+                }
+            }
+            return member
         } catch (e: Exception) {
             throw IllegalStateException(e)
         } finally {
-           close(conn, pstmt, rs)
+            close(conn, pstmt, rs)
         }
     }
 

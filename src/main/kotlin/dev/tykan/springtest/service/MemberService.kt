@@ -14,17 +14,12 @@ class MemberService(private val memberRepository: MemberRepository) {
         memberRepository.save(member)
         return member.id
     }
-    
-    // 전체 회원 조회
-
-    fun findMembers(): List<Member> {
-        return memberRepository.findAll()
-    }
 
     // 전체 회원 조회
-    fun findOne(memberId: Long): Member? {
-        return memberRepository.findById(memberId)
-    }
+    fun findMembers(): List<Member> = memberRepository.findAll()
+
+    // 전체 회원 조회
+    fun findOne(memberId: Long): Member? = memberRepository.findById(memberId)
 
     private fun validateDuplicatedMember(member: Member) {
         memberRepository.findByName(member.name)?.let {
