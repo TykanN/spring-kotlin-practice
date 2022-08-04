@@ -6,7 +6,7 @@ import javax.persistence.*
 class Member(
     @Id @GeneratedValue
     @Column(name = "member_id")
-    var id: Long?,
+    var id: Long? = null,
 
     var name: String,
 

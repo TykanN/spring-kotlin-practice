@@ -1,6 +1,7 @@
 package dev.tykan.jpashop.domain.item
 
 import dev.tykan.jpashop.domain.Category
+import dev.tykan.jpashop.exception.NotEnoughStockException
 import javax.persistence.*
 
 @Entity
@@ -15,9 +16,26 @@ abstract class Item(
 
     var price: Int = 0,
 
-    var stockQuantity: Int = 0,
+    stockQuantity: Int = 0,
 
     @ManyToMany(mappedBy = "items")
     var categories: MutableList<Category> = mutableListOf()
 
-)
+) {
+
+    var stockQuantity = stockQuantity
+        protected set
+
+    //== 비즈니스 로직 ==//
+    fun addStock(quantity: Int) {
+        this.stockQuantity += quantity
+    }
+
+    fun removeStock(quantity: Int) {
+        val restStock: Int = this.stockQuantity - quantity
+        if (restStock < 0) {
+            throw NotEnoughStockException("need more stock")
+        }
+        this.stockQuantity = restStock
+    }
+}

@@ -7,16 +7,16 @@ class Delivery(
 
     @Id @GeneratedValue
     @Column(name = "delivery_id")
-    var id: Long,
+    var id: Long? = null,
 
     @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    var order: Order,
+    var order: Order? = null,
 
     @Embedded
-    var address: Address,
+    var address: Address? = null,
 
     @Enumerated(EnumType.STRING)
-    var status: DeliveryStatus // READY, COMP
+    var status: DeliveryStatus? = null // READY, COMP
 ) {
 
 }
