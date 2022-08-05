@@ -8,10 +8,10 @@ class Member(
     @Column(name = "member_id")
     var id: Long? = null,
 
-    var name: String,
+    var name: String = "",
 
     @Embedded
-    var address: Address,
+    var address: Address = Address(),
 
     @OneToMany(mappedBy = "member", cascade = [CascadeType.ALL])
     var orders: MutableList<Order> = mutableListOf()

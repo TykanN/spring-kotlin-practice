@@ -8,6 +8,7 @@ import dev.tykan.jpashop.domain.item.Item
 import dev.tykan.jpashop.repository.ItemRepository
 import dev.tykan.jpashop.repository.MemberRepository
 import dev.tykan.jpashop.repository.OrderRepository
+import dev.tykan.jpashop.repository.OrderSearch
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -55,8 +56,8 @@ class OrderService(
         order.cancel()
     }
 
-    //검색
-//    fun findOrders(orderSearch: OrderSearch) : List<Order>{
-//        return orderRepository.findAll(orderSearch)
-//    }
+    //    검색
+    fun findOrders(orderSearch: OrderSearch): List<Order> {
+        return orderRepository.findAll(orderSearch)
+    }
 }
