@@ -34,12 +34,12 @@ class OrderRepository(private val em: EntityManager) {
         }
 
         //회원 이름 검색
-        orderSearch.memberName?.let {
-            val name: Predicate = cb.like(m.get<String>("name"), "%$it%")
+        orderSearch.memberName.let {
+            val name: Predicate = cb.like(m.get<String>("name"), "%${it}%")
             criteria.add(name)
         }
 
-        cq.where(cb.and(criteria[0]))
+        cq.where(cb.and(*criteria.toTypedArray()))
         val query: TypedQuery<Order> = em.createQuery(cq).setMaxResults(1000)
 
 
