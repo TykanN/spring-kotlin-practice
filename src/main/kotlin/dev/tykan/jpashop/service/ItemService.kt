@@ -14,6 +14,14 @@ class ItemService(private val itemRepository: ItemRepository) {
         itemRepository.save(item)
     }
 
+    @Transactional
+    fun updateItem(itemId: Long, name: String, price: Int, stock: Int) {
+        val findItem = itemRepository.findOne(itemId) ?: throw NullPointerException()
+        findItem.price = price;
+        findItem.name = name;
+        findItem.updateStock(stock)
+    }
+
     fun findItems(): MutableList<Item> = itemRepository.findAll()
 
     fun findOne(itemId: Long): Item? = itemRepository.findOne(itemId)

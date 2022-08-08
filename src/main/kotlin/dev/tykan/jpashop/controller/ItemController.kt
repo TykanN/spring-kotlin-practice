@@ -47,13 +47,15 @@ class ItemController(private val itemService: ItemService) {
 
     @PostMapping("/items/{itemId}/edit")
     fun updateItem(@PathVariable itemId: String, @ModelAttribute("form") form: BookForm): String {
-        val book = Book(form.author, form.isbn)
-        book.id = form.id
-        book.name = form.name
-        book.price = form.price
-        book.addStock(form.stockQuantity)
+//        val book = Book(form.author, form.isbn)
+//        book.id = form.id
+//        book.name = form.name
+//        book.price = form.price
+//        book.addStock(form.stockQuantity)
+//
+//        itemService.saveItem(book)
 
-        itemService.saveItem(book)
+        itemService.updateItem(form.id, form.name, form.price, form.stockQuantity)
         return "redirect:/items"
     }
 }

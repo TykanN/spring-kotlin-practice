@@ -38,4 +38,8 @@ abstract class Item(
         }
         this.stockQuantity = restStock
     }
+
+    fun updateStock(quantity: Int) {
+        this.stockQuantity = quantity
+    }
 }
