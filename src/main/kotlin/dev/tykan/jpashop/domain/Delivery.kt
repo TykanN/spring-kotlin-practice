@@ -1,5 +1,6 @@
 package dev.tykan.jpashop.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -10,6 +11,7 @@ class Delivery(
     var id: Long? = null,
 
     @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JsonIgnore
     var order: Order? = null,
 
     @Embedded

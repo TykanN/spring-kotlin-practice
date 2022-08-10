@@ -1,5 +1,6 @@
 package dev.tykan.jpashop.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import dev.tykan.jpashop.domain.item.Item
 import javax.persistence.*
 
@@ -15,6 +16,7 @@ class OrderItem protected constructor(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     var order: Order? = null,
 
     orderPrice: Int = 0,

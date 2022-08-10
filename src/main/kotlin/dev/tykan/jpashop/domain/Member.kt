@@ -1,5 +1,6 @@
 package dev.tykan.jpashop.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 @Entity
@@ -14,6 +15,7 @@ class Member(
     var address: Address = Address(),
 
     @OneToMany(mappedBy = "member", cascade = [CascadeType.ALL])
+    @JsonIgnore
     var orders: MutableList<Order> = mutableListOf()
 
 ) {
