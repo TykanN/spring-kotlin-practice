@@ -61,7 +61,43 @@ class OrderRepository(private val em: EntityManager) {
         return em.createQuery(
             "select new dev.tykan.jpashop.repository.OrderSimpleQueryDto(o.id, m.name, o.orderDate, o.status, d.address) from Order o" +
                     " join o.member m" +
-                    " join o.delivery d", OrderSimpleQueryDto::class.java
+                    " join o.delivery d",
+            OrderSimpleQueryDto::class.java
         ).resultList
+    }
+
+    /**
+     * 조인을 하면서 데이터가 뻥튀기. 주문 1개 * 주문아이템 2개 조인 -> 주문 2개
+     * distinct 추가 -> DB 조인에서는 변경 없음
+     * 페이징을 메모리에 올려서 하기 때문에 한계가 있음
+     * 컬렉션 페치 조인을 2개 이상 할 경우 데이터가 심각하게 뻥튀기되고 정합성에 문제가 생길 수 있음
+     */
+
+    fun findAllWithItem(): List<Order> {
+        return em.createQuery(
+            "select distinct o from Order o" +
+                    " join fetch o.member m" +
+                    " join fetch o.delivery d" +
+                    " join fetch o.orderItems oi" +
+                    " join fetch oi.item i",
+            Order::class.java
+        ).run {
+            firstResult = 1
+            maxResults = 100
+            resultList
+        }
+    }
+
+    fun findAllWithMemberDelivery(offset: Int, limit: Int): List<Order> {
+        return em.createQuery(
+            "select o from Order o" +
+                    " left join fetch o.member m" +
+                    " left join fetch o.delivery d",
+            Order::class.java
+        ).run {
+            firstResult = offset
+            maxResults = limit
+            resultList
+        }
     }
 }

@@ -1,5 +1,6 @@
 package dev.tykan.jpashop.domain
 
+import org.hibernate.annotations.BatchSize
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -14,6 +15,7 @@ class Order protected constructor(
     @JoinColumn(name = "member_id")
     var member: Member,
 
+    @BatchSize(size = 10)
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL])
     var orderItems: MutableList<OrderItem> = mutableListOf(),
 
