@@ -6,13 +6,20 @@ import dev.tykan.jpashop.domain.OrderItem
 import dev.tykan.jpashop.domain.OrderStatus
 import dev.tykan.jpashop.repository.OrderRepository
 import dev.tykan.jpashop.repository.OrderSearch
+import dev.tykan.jpashop.repository.order.query.OrderFlatDto
+import dev.tykan.jpashop.repository.order.query.OrderItemQueryDto
+import dev.tykan.jpashop.repository.order.query.OrderQueryDto
+import dev.tykan.jpashop.repository.order.query.OrderQueryRepository
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 
 @RestController
-class OrderApiController(private val orderRepository: OrderRepository) {
+class OrderApiController(
+    private val orderRepository: OrderRepository,
+    private val orderQueryRepository: OrderQueryRepository
+) {
 
     companion object {
         class OrderItemDto(
@@ -73,6 +80,34 @@ class OrderApiController(private val orderRepository: OrderRepository) {
     ): List<OrderDto> {
         val orders = orderRepository.findAllWithMemberDelivery(offset, limit);
         return orders.map { OrderDto(it) }
+    }
+
+    @GetMapping("/api/v4/orders")
+    fun ordersV4(): List<OrderQueryDto> {
+        return orderQueryRepository.findOrderQueryDtos()
+    }
+
+    @GetMapping("/api/v5/orders")
+    fun ordersV5(): List<OrderQueryDto> {
+        return orderQueryRepository.findAllByDtoOptimization()
+    }
+
+    @GetMapping("/api/v6/orders")
+    fun ordersV6Flat(): List<OrderFlatDto> {
+        return orderQueryRepository.findAllByDtoFlat()
+    }
+
+    @GetMapping("/api/v6.1/orders")
+    fun ordersV6(): List<OrderQueryDto> {
+        val flats = orderQueryRepository.findAllByDtoFlat()
+        val result =
+            flats.groupBy { OrderQueryDto(it.orderId, it.name, it.orderDate, it.orderStatus, it.address) }.map {
+                it.key.apply {
+                    this.orderItems =
+                        it.value.map { e -> OrderItemQueryDto(e.orderId, e.itemName, e.orderPrice, e.count) }
+                }
+            }
+        return result
     }
 }
 

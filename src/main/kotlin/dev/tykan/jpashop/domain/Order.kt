@@ -15,7 +15,7 @@ class Order protected constructor(
     @JoinColumn(name = "member_id")
     var member: Member,
 
-    @BatchSize(size = 10)
+    @BatchSize(size = 50)
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL])
     var orderItems: MutableList<OrderItem> = mutableListOf(),
 
