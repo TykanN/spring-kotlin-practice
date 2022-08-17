@@ -18,16 +18,27 @@ class JpaMain {
             tx.begin()
             try {
                 val member = Member(username = "HelloB")
+                println("========${member.id}")
+                println("========${member::class.hashCode()}")
+                println("========${member}")
                 em.persist(member)
+
 //               val member = em.find(Member::class.java, 2L)
 //                member.name = "HelloJPA"
 //
 //                em.remove(member)
-                val findMember = em.createQuery("select  m from Member m", Member::class.java).run {
-                    firstResult = 5
-                    maxResults = 100
-                    resultList
-                }
+                println("========${member.id}")
+                println("========${member::class.hashCode()}")
+                println("========${member}")
+//                val findMember = em.createQuery("select  m from Member m", Member::class.java).run {
+//                    firstResult = 5
+//                    maxResults = 100
+//                    resultList
+//                }
+                val findMember = em.find(Member::class.java, 1L)
+                println(findMember.id)
+
+
 
                 tx.commit()
             } catch (e: Exception) {

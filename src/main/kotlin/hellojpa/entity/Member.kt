@@ -10,7 +10,7 @@ import javax.persistence.*
 class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null,
+    val id: Long? = null,
 
     @Column(name = "name", length = 10, nullable = false)
     var username: String = "",
