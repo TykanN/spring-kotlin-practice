@@ -1,4 +1,4 @@
-package hellojpa.entity
+package hellojpa.domain
 
 import hellojpa.RoleType
 import hellojpa.converter.RoleTypeConverter
@@ -10,10 +10,11 @@ import javax.persistence.*
 class Member(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     val id: Long? = null,
 
-    @Column(name = "name", length = 10, nullable = false)
-    var username: String = "",
+    @Column(name = "username", length = 10, nullable = false)
+    var name: String = "",
 
     var age: Int? = null,
 
@@ -33,4 +34,25 @@ class Member(
     @Transient
     var temp: Int = 0,
 ) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    var team: Team? = null
+
+    var city: String = ""
+        protected set
+
+    var street: String = ""
+        protected set
+
+    var zipCode: String = ""
+        protected set
+
+    fun updateAddress(city: String?, street: String?, zipCode: String?) {
+
+        this.city = city ?: this.city
+        this.street = street ?: this.street
+        this.zipCode = zipCode ?: this.zipCode
+
+
+    }
 }

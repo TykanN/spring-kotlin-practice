@@ -3,7 +3,11 @@
              xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
     <persistence-unit name="hello">
-        <class>hellojpa.entity.Member</class>
+        <class>hellojpa.domain.Member</class>
+        <class>hellojpa.domain.Team</class>
+        <class>hellojpa.domain.Item</class>
+        <class>hellojpa.domain.Order</class>
+        <class>hellojpa.domain.OrderItem</class>
         <class>hellojpa.converter.BooleanYnConverter</class>
         <properties>
             <!-- 필수 속성 -->

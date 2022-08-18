@@ -1,6 +1,7 @@
 package hellojpa
 
-import hellojpa.entity.Member
+import hellojpa.domain.Member
+import hellojpa.domain.Team
 import javax.persistence.EntityManager
 import javax.persistence.EntityManagerFactory
 import javax.persistence.EntityTransaction
@@ -17,28 +18,24 @@ class JpaMain {
             val tx: EntityTransaction = em.transaction
             tx.begin()
             try {
-                val member = Member(username = "HelloB")
-                println("========${member.id}")
-                println("========${member::class.hashCode()}")
-                println("========${member}")
+
+                val team = Team("토트넘")
+                em.persist(team)
+
+                val member = Member().apply {
+                    this.name = "해리 케인"
+                    this.team = team
+                }
+                
+
                 em.persist(member)
 
-//               val member = em.find(Member::class.java, 2L)
-//                member.name = "HelloJPA"
-//
-//                em.remove(member)
-                println("========${member.id}")
-                println("========${member::class.hashCode()}")
-                println("========${member}")
-//                val findMember = em.createQuery("select  m from Member m", Member::class.java).run {
-//                    firstResult = 5
-//                    maxResults = 100
-//                    resultList
-//                }
-                val findMember = em.find(Member::class.java, 1L)
-                println(findMember.id)
+                em.flush()
+                em.clear()
 
-
+                val findMember = em.find(Member::class.java, member.id)
+                val findTeam = findMember.team!!
+                println("=====${findTeam.name}")
 
                 tx.commit()
             } catch (e: Exception) {
