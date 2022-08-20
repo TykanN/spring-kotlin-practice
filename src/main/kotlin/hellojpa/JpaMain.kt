@@ -22,20 +22,29 @@ class JpaMain {
                 val team = Team("토트넘")
                 em.persist(team)
 
-                val member = Member().apply {
+                val member1 = Member().apply {
                     this.name = "해리 케인"
                     this.team = team
                 }
-                
 
-                em.persist(member)
+                val member2 = Member().apply {
+                    this.name = "손흥민"
+                    this.team = team
+                }
+
+
+                em.persist(member1)
+                em.persist(member2)
 
                 em.flush()
                 em.clear()
 
-                val findMember = em.find(Member::class.java, member.id)
-                val findTeam = findMember.team!!
-                println("=====${findTeam.name}")
+                val findMember = em.find(Member::class.java, member1.id)
+                val members = findMember.team?.members ?: emptyList()
+
+                for (m in members) {
+                    println(m.name)
+                }
 
                 tx.commit()
             } catch (e: Exception) {
