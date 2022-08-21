@@ -4,11 +4,13 @@ import javax.persistence.*
 
 @Entity
 class OrderItem(
-    @Column(name = "order_id")
-    val orderId: Long,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    val order: Order,
 
-    @Column(name = "item_id")
-    val itemId: Long,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    val item: Item,
 ) {
 
     @Id

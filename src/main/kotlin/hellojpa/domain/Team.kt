@@ -15,5 +15,10 @@ class Team(name: String) {
         protected set
 
     @OneToMany(mappedBy = "team")
-    val members: List<Member> = mutableListOf()
+    val members: MutableList<Member> = mutableListOf()
+
+    fun addMember(member: Member) {
+        members.add(member)
+        member.team = this
+    }
 }

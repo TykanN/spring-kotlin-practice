@@ -19,22 +19,24 @@ class JpaMain {
             tx.begin()
             try {
 
-                val team = Team("토트넘")
-                em.persist(team)
 
                 val member1 = Member().apply {
                     this.name = "해리 케인"
-                    this.team = team
+//                    this.team = team
                 }
 
                 val member2 = Member().apply {
                     this.name = "손흥민"
-                    this.team = team
+//                    this.team = team
                 }
 
 
                 em.persist(member1)
                 em.persist(member2)
+
+                val team = Team("토트넘")
+                team.addMember(member1)
+                em.persist(team)
 
                 em.flush()
                 em.clear()

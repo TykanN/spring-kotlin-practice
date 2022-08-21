@@ -15,8 +15,9 @@ class Order(
     var id: Long? = null
         protected set
 
-    @Column(name = "member_id")
-    var memberId: Long? = null
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    var member: Member? = null
         protected set
 
 }
