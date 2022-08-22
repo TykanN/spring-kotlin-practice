@@ -38,6 +38,10 @@ class Member(
     @JoinColumn(name = "team_id")
     var team: Team? = null
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "locker_id")
+    var locker: Locker? = null
+
     var city: String = ""
         protected set
 

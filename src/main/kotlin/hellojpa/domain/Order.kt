@@ -7,7 +7,7 @@ import javax.persistence.*
 class Order(
 
     @Enumerated(EnumType.STRING)
-    var status: OrderStatus = OrderStatus.ORDER
+    var status: OrderStatus = OrderStatus.ORDER,
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,4 +20,7 @@ class Order(
     var member: Member? = null
         protected set
 
+    @OneToOne
+    @JoinColumn(name = "delivery_id")
+    var delivery: Delivery? = null
 }

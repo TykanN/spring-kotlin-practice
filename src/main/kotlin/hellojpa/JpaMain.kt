@@ -1,5 +1,7 @@
 package hellojpa
 
+import hellojpa.domain.Album
+import hellojpa.domain.Book
 import hellojpa.domain.Member
 import hellojpa.domain.Team
 import javax.persistence.EntityManager
@@ -47,6 +49,17 @@ class JpaMain {
                 for (m in members) {
                     println(m.name)
                 }
+
+                val book = Book().apply {
+                    name = "내 책"
+                    author = "gg"
+                }
+                val album = Album().apply {
+                    name = "내 앨범"
+                    artist = "GD"
+                }
+                em.persist(book)
+                em.persist(album)
 
                 tx.commit()
             } catch (e: Exception) {
