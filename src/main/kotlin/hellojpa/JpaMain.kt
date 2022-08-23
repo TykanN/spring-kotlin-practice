@@ -1,7 +1,5 @@
 package hellojpa
 
-import hellojpa.domain.Album
-import hellojpa.domain.Book
 import hellojpa.domain.Member
 import hellojpa.domain.Team
 import javax.persistence.EntityManager
@@ -38,32 +36,39 @@ class JpaMain {
 
                 val team = Team("토트넘")
                 team.addMember(member1)
+                team.addMember(member2)
                 em.persist(team)
 
                 em.flush()
                 em.clear()
 
-                val findMember = em.find(Member::class.java, member1.id)
-                val members = findMember.team?.members ?: emptyList()
+//                val m1 = em.find(Member::class.java, member1.id)
+//                val m2 = em.find(Member::class.java, member2.id)
 
-                for (m in members) {
-                    println(m.name)
-                }
+                val members = em.createQuery("select m from Member m", Member::class.java).resultList
 
-                val book = Book().apply {
-                    name = "내 책"
-                    author = "gg"
-                }
-                val album = Album().apply {
-                    name = "내 앨범"
-                    artist = "GD"
-                }
-                em.persist(book)
-                em.persist(album)
+//                val findMember = em.find(Member::class.java, member1.id)
+//                val members = findMember.team?.members ?: emptyList()
+//
+//                for (m in members) {
+//                    println(m.name)
+//                }
+
+//                val book = Book().apply {
+//                    name = "내 책"
+//                    author = "gg"
+//                }
+//                val album = Album().apply {
+//                    name = "내 앨범"
+//                    artist = "GD"
+//                }
+//                em.persist(book)
+//                em.persist(album)
 
                 tx.commit()
             } catch (e: Exception) {
                 tx.rollback()
+                e.printStackTrace()
             } finally {
                 em.close()
             }

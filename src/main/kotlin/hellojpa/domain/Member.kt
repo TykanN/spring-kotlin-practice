@@ -4,6 +4,7 @@ import hellojpa.RoleType
 import hellojpa.converter.RoleTypeConverter
 import java.time.LocalDateTime
 import javax.persistence.*
+import javax.persistence.FetchType.LAZY
 
 @Entity
 @Table(name = "member")
@@ -34,29 +35,29 @@ class Member(
     @Transient
     var temp: Int = 0,
 ) {
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "team_id")
     var team: Team? = null
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "locker_id")
     var locker: Locker? = null
 
-    var city: String = ""
+    @Embedded
+    var homeAddress: Address = Address()
         protected set
 
-    var street: String = ""
+    @Embedded
+    @AttributeOverrides(
+        AttributeOverride(name = "city", column = Column(name = "work_city")),
+        AttributeOverride(name = "street", column = Column(name = "work_street")),
+        AttributeOverride(name = "zipcode", column = Column(name = "work_zipcode")),
+    )
+    var workAddress: Address = Address()
         protected set
 
-    var zipCode: String = ""
-        protected set
 
-    fun updateAddress(city: String?, street: String?, zipCode: String?) {
-
-        this.city = city ?: this.city
-        this.street = street ?: this.street
-        this.zipCode = zipCode ?: this.zipCode
-
-
+    fun updateAddress(address: Address) {
+        homeAddress = address
     }
 }
