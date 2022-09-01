@@ -60,4 +60,10 @@ class Member(
     fun updateAddress(address: Address) {
         homeAddress = address
     }
+
+    override fun toString(): String {
+        return "Member(name='$name', age=$age)"
+    }
+
+
 }
