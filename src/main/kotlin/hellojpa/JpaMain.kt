@@ -1,6 +1,7 @@
 package hellojpa
 
 import hellojpa.domain.Member
+import hellojpa.domain.Team
 import javax.persistence.EntityManager
 import javax.persistence.EntityManagerFactory
 import javax.persistence.EntityTransaction
@@ -18,25 +19,30 @@ class JpaMain {
             tx.begin()
             try {
 
-                for (i in 1..100 step 2) {
-                    val member = Member().apply {
-                        name = "member$i"
-                        age = i
-                    }
-                    em.persist(member)
+                val team = Team("teamA")
+
+                em.persist(team)
+                val member = Member().apply {
+                    name = "teamA"
+                    age = 10
                 }
+
+                team.addMember(member)
+
+
+                em.persist(member)
 
                 em.flush()
                 em.clear()
 
 
-                val a = em.createQuery("select m from Member m order by m.age desc", Member::class.java).apply {
-                    firstResult = 10
+                val query = "select m, case when m.age<10 then '핏덩이' else '일반' end from Member m"
+                val a = em.createQuery(query).apply {
+                    firstResult = 0
                     maxResults = 10
                 }.resultList
 
-                println(a.toString())
-
+                print(a)
 
                 tx.commit()
             } catch (e: Exception) {
