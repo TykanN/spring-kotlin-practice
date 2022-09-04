@@ -20,29 +20,42 @@ class JpaMain {
             try {
 
                 val team = Team("teamA")
+                val team2 = Team("teamB")
 
                 em.persist(team)
+                em.persist(team2)
                 val member = Member().apply {
-                    name = "teamA"
+                    name = "1"
+                    age = 10
+                }
+                val member2 = Member().apply {
+                    name = "2"
+                    age = 10
+                }
+                val member3 = Member().apply {
+                    name = "3"
                     age = 10
                 }
 
+
                 team.addMember(member)
+                team.addMember(member2)
+                team2.addMember(member3)
 
 
                 em.persist(member)
+                em.persist(member2)
+                em.persist(member3)
 
                 em.flush()
                 em.clear()
 
 
-                val query = "select m, case when m.age<10 then '핏덩이' else '일반' end from Member m"
-                val a = em.createQuery(query).apply {
-                    firstResult = 0
-                    maxResults = 10
-                }.resultList
+                val query = "update Member m set m.age = 20 where m.name = '2'"
+                val a = em.createQuery(query).executeUpdate()
 
-                print(a)
+                println(a)
+
 
                 tx.commit()
             } catch (e: Exception) {
