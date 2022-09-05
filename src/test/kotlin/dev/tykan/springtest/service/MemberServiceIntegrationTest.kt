@@ -30,6 +30,7 @@ class MemberServiceIntegrationTest {
         assertThat(member.name).isEqualTo(findMember?.name)
 
     }
+    
 
     @Test
     fun joinDuplicate() {
