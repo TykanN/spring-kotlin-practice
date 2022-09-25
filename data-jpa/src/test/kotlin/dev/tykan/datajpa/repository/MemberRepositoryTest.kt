@@ -22,7 +22,7 @@ internal class MemberRepositoryTest {
     @Throws(Exception::class)
     fun testMember() {
         //given
-        val member = Member("memberA")
+        val member = Member("memberA", 10)
         val savedMember = memberRepository.save(member)
         //when
         val findMember = memberRepository.findByIdOrNull(savedMember.id!!)

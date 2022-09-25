@@ -21,7 +21,7 @@ internal class MemberJpaRepositoryTest {
     @Throws(Exception::class)
     fun testMember() {
         //given
-        val member = Member("memberA")
+        val member = Member("memberA", 10)
         val savedMember = memberJpaRepository.save(member)
         //when
         val findMember = memberJpaRepository.find(savedMember.id!!)
