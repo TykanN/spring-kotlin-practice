@@ -31,4 +31,54 @@ internal class MemberRepositoryTest {
         assertThat(findMember?.username).isEqualTo(member.username)
         assertThat(findMember).isEqualTo(member)
     }
+
+    @Test
+    @DisplayName("BasicCRUD")
+    @Throws(Exception::class)
+    fun basicCrud() {
+        //given
+        val member1 = Member("member1", 10)
+        val member2 = Member("member2", 10)
+        memberRepository.save(member1)
+        memberRepository.save(member2)
+        //when
+        val findMember1 = memberRepository.findByIdOrNull(member1.id!!)
+        val findMember2 = memberRepository.findByIdOrNull(member2.id!!)
+        //then
+        assertThat(findMember1).isEqualTo(member1)
+        assertThat(findMember2).isEqualTo(member2)
+
+        // 리스트 조회 검증
+        val all = memberRepository.findAll()
+        assertThat(all.size).isEqualTo(2)
+
+        // 카운트 검증
+        val count = memberRepository.count()
+        assertThat(count).isEqualTo(2)
+
+        // 삭제 검증
+        memberRepository.delete(member1)
+        memberRepository.delete(member2)
+
+        val deletedCount = memberRepository.count()
+        assertThat(deletedCount).isEqualTo(0)
+    }
+
+    @Test
+    @DisplayName("greaterThan")
+    @Throws(Exception::class)
+    fun greaterThan() {
+        //given
+        val m1 = Member("aaa", 10)
+        val m2 = Member("aaa", 20)
+        memberRepository.save(m1)
+        memberRepository.save(m2)
+        //when
+        val result = memberRepository.findByUsernameAndAgeGreaterThan("aaa", 15)
+        //then
+
+        assertThat(result.first().username).isEqualTo("aaa")
+        assertThat(result.first().age).isEqualTo(20)
+
+    }
 }
