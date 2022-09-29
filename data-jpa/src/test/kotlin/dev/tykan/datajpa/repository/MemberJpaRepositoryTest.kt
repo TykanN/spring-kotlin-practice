@@ -80,4 +80,19 @@ internal class MemberJpaRepositoryTest {
         assertThat(result.first().age).isEqualTo(20)
         
     }
+
+    @Test
+    @DisplayName("test named query")
+    @Throws(Exception::class)
+    fun testNamedQuery() {
+        //given
+        val m1 = Member("aaa", 10)
+        val m2 = Member("bbb", 20)
+        memberJpaRepository.save(m1)
+        memberJpaRepository.save(m2)
+        //when
+        val result = memberJpaRepository.findByUsername("aaa")
+        //then
+        assertThat(result.first()).isEqualTo(m1)
+    }
 }

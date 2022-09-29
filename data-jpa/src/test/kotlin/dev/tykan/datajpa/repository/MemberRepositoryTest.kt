@@ -1,6 +1,7 @@
 package dev.tykan.datajpa.repository
 
 import dev.tykan.datajpa.entity.Member
+import dev.tykan.datajpa.entity.Team
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional
 internal class MemberRepositoryTest {
     @Autowired
     lateinit var memberRepository: MemberRepository
+    @Autowired
+    lateinit var teamRepository: TeamRepository
 
     @Test
     @DisplayName("testMember")
@@ -80,5 +83,49 @@ internal class MemberRepositoryTest {
         assertThat(result.first().username).isEqualTo("aaa")
         assertThat(result.first().age).isEqualTo(20)
 
+    }
+
+    @Test
+    @DisplayName("test named query")
+    @Throws(Exception::class)
+    fun testNamedQuery() {
+        //given
+        val m1 = Member("aaa", 10)
+        val m2 = Member("bbb", 20)
+        memberRepository.save(m1)
+        memberRepository.save(m2)
+        //when
+        val result = memberRepository.findByUsername("aaa")
+        //then
+        assertThat(result.first()).isEqualTo(m1)
+    }
+
+    @Test
+    @DisplayName("Dto test")
+    @Throws(Exception::class)
+    fun dtoTest() {
+        //given
+
+        val team = Team("teamA")
+        teamRepository.save(team)
+
+
+        val m1 = Member("aaa", 10)
+        m1.changeTeam(team)
+        memberRepository.save(m1)
+
+
+        val memberDto = memberRepository.findMemberDto()
+        println(memberDto)
+
+    }
+
+    @Test
+    @DisplayName("test Optional")
+    @Throws(Exception::class)
+    fun testOptional() {
+        //given
+        val member = memberRepository.findOptionalByUsername("asd")
+        println(member)
     }
 }

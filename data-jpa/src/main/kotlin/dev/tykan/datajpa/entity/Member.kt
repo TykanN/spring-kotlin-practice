@@ -4,8 +4,10 @@ import javax.persistence.Entity
 import javax.persistence.FetchType.LAZY
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
+import javax.persistence.NamedQuery
 
 @Entity
+@NamedQuery(name= "Member.findByUsername", query = "select m from Member m where m.username = :username")
 class Member(
     var username: String = "default name",
     var age: Int?,
